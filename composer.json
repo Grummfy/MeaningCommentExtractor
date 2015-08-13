@@ -1,0 +1,15 @@
+{
+    "name": "grummfy/mc-extractor",
+    "description": "Extract comment with some meaning like todo, fixme, ...",
+    "authors": [
+        {
+            "name": "Grummfy",
+            "email": "grummfy@gmail.com"
+        }
+    ],
+    "autoload": {
+		"psr-4": {
+			"Grummfy\\WPExtractor\\": "src/"
+		}
+    }
+}

@@ -1,0 +1,31 @@
+#!/bin/php
+<?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Grummfy\WPExtractor\Report\HtmlReport AS Report;
+use Grummfy\WPExtractor\Extractor\CommentWordExtractor AS Extractor;
+use Grummfy\WPExtractor\Finder;
+
+use Grummfy\WPExtractor\WordPattern;
+
+// TODO extract $directory from console, config or whatever
+$directory = __DIR__ . '/../src/';
+
+$report = new Report();
+$extractor = new Extractor();
+$finder = new Finder();
+
+$wpTODO = new WordPattern\Todo();
+$wpTD = new WordPattern\TechnicalDebt();
+$wpTODO->extractorRequestPatterns($extractor);
+$wpTD->extractorRequestPatterns($extractor);
+
+foreach ($finder->find($directory, '*.php') as $file)
+{
+	$fileContent = file_get_contents($file);
+	$report->setFile($file);
+	$extractor->fillReportWithContentMatch($fileContent, $report);
+}
+
+$report->buildAndPrint();
